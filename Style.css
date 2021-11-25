@@ -32,6 +32,16 @@
     border-radius: 2px;
 }
 
+#clear {
+    width: 134px;
+    height: 32px;
+    background-color: rgb(187, 16, 4);
+    color: white;
+    border-style: none;
+    border-radius: 2px;
+}
+
+
 .flex-cont {
     display: flex;
     /* background-color: royalblue; */

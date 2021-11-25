@@ -20,20 +20,6 @@ $results = mysqli_query($Sychro, $sql);
 $prints = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
 // Insert data into the database user input
-if(isset($_POST["save"])){
-    $Name = $_POST['name'];
-    $Mat =  $_POST["matricule"];
-    $Email = $_POST["email"];
-    $Program = $_POST["program"];
-    
-    $sql_insert = "insert into student (name, matricule, email, program) values('$Name', '$Mat', '$Email', '$Program')";
-    $sql_querry = mysqli_query($Sychro, $sql_insert);
-    if($sql_querry === true) {
-        echo "new data added";
-        header("Index.php");
-    }else {
-        echo "error bro";
-    }
-    }
+
 
 ?>

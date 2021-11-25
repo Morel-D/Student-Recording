@@ -2,8 +2,30 @@
 require_once("Connection.php");
 
 
+if(isset($_POST["save"])){
+    $Name = mysqli_real_escape_string($Sychro, $_POST['name']);
+    $Mat = mysqli_real_escape_string($Sychro, $_POST['matricule']);
+    $Email = mysqli_real_escape_string($Sychro, $_POST['email']);
+    $Program = mysqli_real_escape_string($Sychro,$_POST['program']);
+    
+    $sql_insert = "insert into student (name, matricule, email, program) values('$Name', '$Mat', '$Email', '$Program')";
+    $results = mysqli_query($Sychro, $sql_insert);
+    if($results) {
+        // echo "new data added";
+        
+        header("location: Index.php");
+    }else {
+        echo "error bro".mysqli_error($Sychro);
+    }
+    }
 
-
+// Search for a particular colum
+    if(isset($_POST["Go"])){
+        $Search =  mysqli_real_escape_string($Sychro, $_POST['search']);
+        $sql_statment = "select * from student where name like '%$Search'";
+        $results = mysqli_query($Sychro, $sql_statment);
+        $Searches = mysqli_fetch_all($results, MYSQLI_ASSOC);
+    }
 
 
 
@@ -41,7 +63,7 @@ require_once("Connection.php");
     <div class="form-group"> 
         <br>
       <label for="">Enter your Names</label>
-      <input type="text" name="name" id="Fname" class="form-control" placeholder="Full Names" aria-describedby="helpId"><br>
+      <input type="text" name="name" id="Fname" class="form-control" placeholder="Full Names" aria-describedby="helpId" ><br>
    
         <label for="">Enter your Matricule</label>
         <input type="text" name="matricule" id="Mart" class="form-control" placeholder="ICTU...." aria-describedby="helpId"><br>   
@@ -56,7 +78,7 @@ require_once("Connection.php");
         <input type="text" name="program" id="Prog" class="form-control" placeholder="SE" aria-describedby="helpId"><br><br>
         
       </div>
-<button type="submit" name = "save" id="save" onclick = "save()">Save</button>
+<button type="submit" name = "save" id="save" value = "sumbit">Save</button>
 
 </form>
 
@@ -68,9 +90,12 @@ require_once("Connection.php");
 
  <hr style="width: 1089px;">
 <br>
+<form action="Index.php" method="post">
 <div class="" style="margin-left: 100px;">
-    <input type="text" placeholder="Search">
-    <button type="submit" id="search">Search</button>
+    <input type="text" name = "search" placeholder="Search">
+    <button type="submit" name ="Go" value = "go" id="search">Search</button>
+    <!-- <button type="submit" id="clear">Clear All</button> -->
+</form>    
 </div>
 <br>
 <br>
@@ -95,17 +120,31 @@ require_once("Connection.php");
       <?php foreach($prints as $print) {  ?>
        <tr class="col">
             <td scope="row"><?php echo htmlspecialchars($print["id"]); ?></td>
-            <td><?php echo htmlspecialchars($print['name']); ?></td>
-            <td><?php echo htmlspecialchars($print['matricule']); ?></td>
-            <td><?php echo htmlspecialchars($print['email']); ?></td>
-            <td><?php echo htmlspecialchars($print['program']); ?></td>
+            <td><?php echo $print['name']; ?></td>
+            <td><?php echo $print['matricule']; ?></td>
+            <td><?php echo $print['email']; ?></td>
+            <td><?php echo $print['program']; ?></td>
             <td><button id="Delete" name = "delete">Delete</button></td>
             <td><button id="Edit">Edit</button></td>
         </tr>
+        
     <?php  }  ?>   
-  
 
 
+       <?php foreach($Searches as $Searche) { ?>
+            <tr class="col"> 
+            <td scope="row"><?php echo "special"; ?></td>
+            <td><?php echo $Searche['name']; ?></td>
+            <td><?php echo $Searche['matricule']; ?></td>
+            <td><?php echo $Searche['email']; ?></td>
+            <td><?php echo $Searche['program']; ?></td>
+            <td><button id="Delete" name = "delete">Delete</button></td>
+            <td><button id="Edit">Edit</button></td>  
+            </tr>
+
+        <?php  }  ?> 
+
+      
     
 
     </tbody>
