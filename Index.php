@@ -2,31 +2,19 @@
 require_once("Connection.php");
 
 
-if(isset($_POST["save"])){
-    $Name = mysqli_real_escape_string($Sychro, $_POST['name']);
-    $Mat = mysqli_real_escape_string($Sychro, $_POST['matricule']);
-    $Email = mysqli_real_escape_string($Sychro, $_POST['email']);
-    $Program = mysqli_real_escape_string($Sychro,$_POST['program']);
-    
-    $sql_insert = "insert into student (name, matricule, email, program) values('$Name', '$Mat', '$Email', '$Program')";
-    $results = mysqli_query($Sychro, $sql_insert);
-    if($results) {
-        // echo "new data added";
-        
-        header("location: Index.php");
-    }else {
-        echo "error bro".mysqli_error($Sychro);
-    }
-    }
 
-// Search for a particular colum
-    if(isset($_POST["Go"])){
-        $Search =  mysqli_real_escape_string($Sychro, $_POST['search']);
-        $sql_statment = "select * from student where name like '%$Search'";
-        $results = mysqli_query($Sychro, $sql_statment);
-        $Searches = mysqli_fetch_all($results, MYSQLI_ASSOC);
-    }
+// Delete colums
 
+if(isset($_POST['delete'])){
+$sql = "delete from student2 where id = '$id'";
+$querry = mysqli_query($Sychro, $sql);
+if($querry){
+    echo "Sucesss !!";
+    // header("location: Index.php");
+}else {
+    echo "ERROR ERROR !!!".mysqli_error($Sychro);
+}
+}
 
 
 ?>
@@ -119,13 +107,13 @@ if(isset($_POST["save"])){
 
       <?php foreach($prints as $print) {  ?>
        <tr class="col">
-            <td scope="row"><?php echo htmlspecialchars($print["id"]); ?></td>
+            <td scope="row"><?php echo $print['id']; ?></td>
             <td><?php echo $print['name']; ?></td>
             <td><?php echo $print['matricule']; ?></td>
             <td><?php echo $print['email']; ?></td>
             <td><?php echo $print['program']; ?></td>
-            <td><button id="Delete" name = "delete">Delete</button></td>
-            <td><button id="Edit">Edit</button></td>
+            <td> <input type="hidden" value="<?php echo $print['id']; ?>"> <input type="submit" name = "delete" value="delete" class ="btn btn-danger"></td>
+            <td><button class = "btn btn-info" id="Edit">Edit</button></td>
         </tr>
         
     <?php  }  ?>   
@@ -138,7 +126,7 @@ if(isset($_POST["save"])){
             <td><?php echo $Searche['matricule']; ?></td>
             <td><?php echo $Searche['email']; ?></td>
             <td><?php echo $Searche['program']; ?></td>
-            <td><button id="Delete" name = "delete">Delete</button></td>
+            <td><button class = "btn btn-danger" id="<?php echo $print['id']; ?>" name = "delete"> Delete </button></td>
             <td><button id="Edit">Edit</button></td>  
             </tr>
 
