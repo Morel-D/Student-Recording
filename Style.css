@@ -84,3 +84,19 @@ table tbody .col:hover {
     height: 60px;
     box-shadow: 2px 2px 2px 2px rgba(128, 128, 128, 0.137);
 }
+
+
+/* table .table_body {
+    background-color: red;
+} */
+
+/* icon style */
+
+#delete_btn {
+    background-color: transparent;
+}
+
+#delete_icon {
+    color: red;
+
+}

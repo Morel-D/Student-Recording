@@ -1,11 +1,9 @@
 <?php
 require_once("Connection.php");
 
-
-
-
-
-
+$sql_count = "select count(name) from student2";
+$querry_count = mysqli_query($Sychro, $sql_count);
+$Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
 
 ?>
 
@@ -18,7 +16,8 @@ require_once("Connection.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="Style.css">
     <title>Student Recording System</title>
 </head>
@@ -72,7 +71,7 @@ require_once("Connection.php");
 <form action="Index.php" method="post">
 <div class="" style="margin-left: 100px;">
     <input type="text" name = "search" placeholder="Search">
-    <button type="submit" name ="Go" value = "go" id="search">Search</button>
+    <button type="submit" name ="Go" value = "go" id="search" onclick="search()">Search</button>
     <!-- <button type="submit" id="clear">Clear All</button> -->
 </form>    
 </div>
@@ -88,7 +87,6 @@ require_once("Connection.php");
             <th>Email</th>
             <th>Program</th>
             <th>Action</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -96,42 +94,91 @@ require_once("Connection.php");
 
     <?php $num = 1; ?>
       <?php foreach($prints as $print) {  ?>
-       <tr class="col">
-            <td scope="row"><?php echo $num ?></td>
+       <tr class="col_table">
+            <td scope="row"><?php echo$print['id']; ?></td>
             <td><?php echo $print['name']; ?></td>
             <td><?php echo $print['matricule']; ?></td>
             <td><?php echo $print['email']; ?></td>
             <td><?php echo $print['program']; ?></td>
             <td>
-                <form action="Index.php" method="post">
-                 <input type="hidden" name = "hidden_btn_delete" value="<?php echo $print['id']; ?>">
-                 <input type="submit" name = "delete" value="delete" class ="btn btn-danger">
-                </form>
+                <!-- ::::::::::::::::::::::::::::::::::::::: -->
+                <!-- Button trigger modal -->
+                 <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#modelId" id= "delete_btn">
+                 <i class="fas fa-trash" id= "delete_icon"></i>
+                 </button>
+                 
+                 <!-- Modal -->
+                 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                <center>  <h4 class="modal-title">Are You Sure ?</h4></center>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                     </button>
+                             </div>
+                             <div class="modal-body">
+                                <label for="" style = "color: grey"> Do you really want to delete these records ? This process cannot be undone.</label>
+                             </div>
+                             <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                 <form action="Index.php" method="post">
+                                <input type="hidden" name = "hidden_btn_delete" value="<?php echo $print['id']; ?>">
+                                <input type="submit" name = "delete" value="delete" class ="btn btn-danger">
+                               </form>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- :::::::::::::::::::::::::::::: -->
+                 <button class = "btn btn-info" id="Edit"><i class="fas fa-pen"></i></button>
+                 <button class = "btn btn-success" id="Edit"><i class="fas fa-eye"></i></button>
             </td>
-               
-            <td><button class = "btn btn-info" id="Edit">Edit</button></td>
         </tr>  
+
+        
+
+
+
         <? $num = $num++; ?>
     <?php  }  ?>   
 
 
-       <!-- <?php foreach($Searches as $Searche) { ?>
+    
+
+
+       <?php foreach($Searches as $Searche) { ?>
             <tr class="col"> 
             <td scope="row"><?php echo "special"; ?></td>
             <td><?php echo $Searche['name']; ?></td>
             <td><?php echo $Searche['matricule']; ?></td>
             <td><?php echo $Searche['email']; ?></td>
             <td><?php echo $Searche['program']; ?></td>
-            <td><button class = "btn btn-danger" id="<?php echo $print['id']; ?>" name = "delete"> Delete </button></td>
+            <td><button class = "btn btn-danger" id="<?php echo $Searche['id']; ?>" name = "delete"> Delete </button></td>
             <td><button id="Edit">Edit</button></td>  
             </tr>
 
-        <?php  }  ?>  -->
+        <?php  }  ?> 
 
       
     
 
     </tbody>
+
+    <tbody style = "background-color: black; color: white">
+        <tr>
+            <td><b>Total Colum</b> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+           <?php foreach($Counts as $Count) {  ?>
+            <td><?php echo array_map('intval', $Count['name']) ?> </td>
+            <?php  }  ?>
+        </tr>
+
+    </tbody>
+
 </table>
 <br>
 <ul class="pagination justify-content-end">
@@ -142,8 +189,24 @@ require_once("Connection.php");
     <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
   </ul> 
 
+  <!-- .............Cards............  -->
+  <!-- <div class="card text-left">
+    <img class="card-img-top" src="holder.js/100px180/" alt="">
+    <div class="card-body">
+      <h4 class="card-title">Title</h4>
+      <p class="card-text">Body</p>
+    </div>
+  </div> -->
+   <!-- .............Cards............  -->
+
 
   <script src="index.js"></script>
 
 </body>
 </html>
+
+
+<!-- <form action="Index.php" method="post">
+                 <input type="hidden" name = "hidden_btn_delete" value="<?php echo $print['id']; ?>">
+                 <input type="submit" name = "delete" value="delete" class ="btn btn-danger">
+                </form> -->

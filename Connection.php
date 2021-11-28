@@ -46,8 +46,11 @@ if(isset($_POST["save"])){
         $Search =  mysqli_real_escape_string($Sychro, $_POST['search']);
         $sql_statment = "select * from student2 where name like '$Search%'";
         $results = mysqli_query($Sychro, $sql_statment);
+
+        if(mysqli_num_rows($results) > 0){
         $Searches = mysqli_fetch_all($results, MYSQLI_ASSOC);
-        // header("location: Index.php");
+        header("location: Index.php");
+             }
     }
 
         // Delete section from a particular colum 

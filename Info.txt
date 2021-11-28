@@ -1,0 +1,21 @@
+Just Fooling Around with PHP
+
+Used Files:
+
+- Index.PHP
+- Connection.PHP
+- Style.css
+- Index.Js
+
+Objectif and Tasks :
+
+- Perform some CRUD Operation (Create, Read, Update, Delete)
+- Including a Search Bar
+- Counting the number of colums
+
+
+Some Problem Encountered 
+
+- Deletion opertaion not complete 
+- Search bar Operation not complete
+- Colum Counting Not complete
