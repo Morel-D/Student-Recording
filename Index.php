@@ -3,21 +3,12 @@ require_once("Connection.php");
 
 
 
-// Delete colums
 
-if(isset($_POST['delete'])){
-$sql = "delete from student2 where id = '$id'";
-$querry = mysqli_query($Sychro, $sql);
-if($querry){
-    echo "Sucesss !!";
-    // header("location: Index.php");
-}else {
-    echo "ERROR ERROR !!!".mysqli_error($Sychro);
-}
-}
+
 
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -103,23 +94,28 @@ if($querry){
     <tbody>
 
 
-
-
+    <?php $num = 1; ?>
       <?php foreach($prints as $print) {  ?>
        <tr class="col">
-            <td scope="row"><?php echo $print['id']; ?></td>
+            <td scope="row"><?php echo $num ?></td>
             <td><?php echo $print['name']; ?></td>
             <td><?php echo $print['matricule']; ?></td>
             <td><?php echo $print['email']; ?></td>
             <td><?php echo $print['program']; ?></td>
-            <td> <input type="hidden" value="<?php echo $print['id']; ?>"> <input type="submit" name = "delete" value="delete" class ="btn btn-danger"></td>
+            <td>
+                <form action="Index.php" method="post">
+                 <input type="hidden" name = "hidden_btn_delete" value="<?php echo $print['id']; ?>">
+                 <input type="submit" name = "delete" value="delete" class ="btn btn-danger">
+                </form>
+            </td>
+               
             <td><button class = "btn btn-info" id="Edit">Edit</button></td>
-        </tr>
-        
+        </tr>  
+        <? $num = $num++; ?>
     <?php  }  ?>   
 
 
-       <?php foreach($Searches as $Searche) { ?>
+       <!-- <?php foreach($Searches as $Searche) { ?>
             <tr class="col"> 
             <td scope="row"><?php echo "special"; ?></td>
             <td><?php echo $Searche['name']; ?></td>
@@ -130,7 +126,7 @@ if($querry){
             <td><button id="Edit">Edit</button></td>  
             </tr>
 
-        <?php  }  ?> 
+        <?php  }  ?>  -->
 
       
     

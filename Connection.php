@@ -49,4 +49,18 @@ if(isset($_POST["save"])){
         $Searches = mysqli_fetch_all($results, MYSQLI_ASSOC);
         // header("location: Index.php");
     }
-?>
+
+        // Delete section from a particular colum 
+
+       if(isset($_POST['delete'])){
+        $Delete = mysqli_real_escape_string($Sychro, $_POST['hidden_btn_delete']);
+        $sql = "delete from student2 where id = '$Delete'";
+        $querry = mysqli_query($Sychro, $sql);
+        if($querry){
+            header("Location: Index.php");
+        }else {
+            echo "ERROR ERROR !!!".mysqli_error($Sychro);
+        }
+        }
+        
+
