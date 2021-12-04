@@ -93,10 +93,12 @@ table tbody .col:hover {
 /* icon style */
 
 #delete_btn {
-    background-color: transparent;
+    background-color: rgb(190, 5, 5);
+    border-style: none;
 }
 
 #delete_icon {
-    color: red;
+    color: rgb(255, 255, 255);
 
 }
+

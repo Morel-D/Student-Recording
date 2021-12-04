@@ -1,9 +1,28 @@
 <?php
 require_once("Connection.php");
 
-$sql_count = "select count(name) from student2";
+
+// if(isset($_POST["Go"])){
+//     $Search =  mysqli_real_escape_string($Sychro, $_POST['search']);
+//     $sql_statment = "select * from student2 where name like '%$Search%'";
+//     $results = mysqli_query($Sychro, $sql_statment);
+
+//     if(mysqli_num_rows($results) > 0){
+//     $Searches = mysqli_fetch_assoc($results);
+//     header("location: Index.php");
+//          }
+// }
+
+
+
+// Count 
+$sql_count = "select count(*) as total from student2";
 $querry_count = mysqli_query($Sychro, $sql_count);
-$Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
+
+
+
+ 
+    
 
 ?>
 
@@ -71,15 +90,37 @@ $Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
 <form action="Index.php" method="post">
 <div class="" style="margin-left: 100px;">
     <input type="text" name = "search" placeholder="Search">
-    <button type="submit" name ="Go" value = "go" id="search" onclick="search()">Search</button>
+    <button type="submit" name ="Go" value = "<?php echo $Search?>" id="search">Search</button>
     <!-- <button type="submit" id="clear">Clear All</button> -->
 </form>    
 </div>
 <br>
 <br>
 
+
+   
+
+
 <table class="table">
-    <thead>
+<thead>
+<tbody style = "background-color: black; color: white">
+        <tr>
+            <td><b>Total Colum</b> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+            <?php  while ($Counts = mysqli_fetch_assoc($querry_count)) { ?>
+
+            <td><?php echo $Counts['total']; ?></td>
+
+            <?php  }  ?>
+        </tr>
+
+    </tbody>
+
+    
         <tr>
             <th>No</th>
             <th>Student Name</th>
@@ -89,10 +130,10 @@ $Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
             <th>Action</th>
         </tr>
     </thead>
+
+
     <tbody>
 
-
-    <?php $num = 1; ?>
       <?php foreach($prints as $print) {  ?>
        <tr class="col_table">
             <td scope="row"><?php echo$print['id']; ?></td>
@@ -102,7 +143,7 @@ $Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
             <td><?php echo $print['program']; ?></td>
             <td>
                 <!-- ::::::::::::::::::::::::::::::::::::::: -->
-                <!-- Button trigger modal -->
+                <!-- Button Delete modal -->
                  <button type="button" class="btn btn-danger btn-md" data-toggle="modal" data-target="#modelId" id= "delete_btn">
                  <i class="fas fa-trash" id= "delete_icon"></i>
                  </button>
@@ -131,23 +172,44 @@ $Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
                      </div>
                  </div>
                  <!-- :::::::::::::::::::::::::::::: -->
+
+                 <!-- ::::::::::::::::::::::::::::::::::::::: -->
+                 <!-- Button View modal -->
+                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modelId">
+                 <i class="fas fa-eye"></i>
+                 </button>
+                 
+                 <!-- Modal -->
+                 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                             <div class="modal-header">
+                                 <h5 class="modal-title">Student View</h5>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                     </button>
+                             </div>
+                             <div class="modal-body">
+                                 Body
+                             </div>
+                             <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 <button type="button" class="btn btn-primary">Save</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- ::::::::::::::::::::::::::::::::::::::: -->
+
                  <button class = "btn btn-info" id="Edit"><i class="fas fa-pen"></i></button>
-                 <button class = "btn btn-success" id="Edit"><i class="fas fa-eye"></i></button>
             </td>
         </tr>  
-
-        
-
-
-
-        <? $num = $num++; ?>
+  
     <?php  }  ?>   
 
 
     
-
-
-       <?php foreach($Searches as $Searche) { ?>
+       <!-- <?php foreach($Searches as $Searche) { ?>
             <tr class="col"> 
             <td scope="row"><?php echo "special"; ?></td>
             <td><?php echo $Searche['name']; ?></td>
@@ -158,26 +220,14 @@ $Counts = mysqli_fetch_array($querry_count, MYSQLI_ASSOC);
             <td><button id="Edit">Edit</button></td>  
             </tr>
 
-        <?php  }  ?> 
+        <?php  }  ?>  -->
 
       
     
 
     </tbody>
 
-    <tbody style = "background-color: black; color: white">
-        <tr>
-            <td><b>Total Colum</b> </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-           <?php foreach($Counts as $Count) {  ?>
-            <td><?php echo array_map('intval', $Count['name']) ?> </td>
-            <?php  }  ?>
-        </tr>
-
-    </tbody>
+    
 
 </table>
 <br>
