@@ -1,27 +1,5 @@
 <?php
 require_once("Connection.php");
-
-
-// if(isset($_POST["Go"])){
-//     $Search =  mysqli_real_escape_string($Sychro, $_POST['search']);
-//     $sql_statment = "select * from student2 where name like '%$Search%'";
-//     $results = mysqli_query($Sychro, $sql_statment);
-
-//     if(mysqli_num_rows($results) > 0){
-//     $Searches = mysqli_fetch_assoc($results);
-//     header("location: Index.php");
-//          }
-// }
-
-
-
-// Count 
-$sql_count = "select count(*) as total from student2";
-$querry_count = mysqli_query($Sychro, $sql_count);
-
-
-
- 
     
 
 ?>
@@ -76,6 +54,8 @@ $querry_count = mysqli_query($Sychro, $sql_count);
         
       </div>
 <button type="submit" name = "save" id="save" value = "sumbit">Save</button>
+
+
 
 </form>
 
@@ -175,12 +155,12 @@ $querry_count = mysqli_query($Sychro, $sql_count);
 
                  <!-- ::::::::::::::::::::::::::::::::::::::: -->
                  <!-- Button View modal -->
-                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modelId">
+                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modelId2">
                  <i class="fas fa-eye"></i>
                  </button>
                  
                  <!-- Modal -->
-                 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                 <div class="modal fade" id="modelId2" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                      <div class="modal-dialog" role="document">
                          <div class="modal-content">
                              <div class="modal-header">
@@ -190,11 +170,16 @@ $querry_count = mysqli_query($Sychro, $sql_count);
                                      </button>
                              </div>
                              <div class="modal-body">
-                                 Body
+                                 <ul>
+                                 <li><?php echo "<b>Name : </b>".$print['name']; ?></li>
+                                 <li><?php echo "<b>Student Matricule : </b>".$print['matricule']; ?></li>
+                                 <li><?php echo "<b>Student School Email : </b>".$print['email']; ?></li>
+                                 <li><?php echo "<b>Student Program : </b>".$print['program']; ?></li>
+                                 </ul>
                              </div>
                              <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                 <button type="button" class="btn btn-primary">Save</button>
+                                 <button type="button" class="btn btn-danger">Delete</button>
                              </div>
                          </div>
                      </div>
@@ -209,19 +194,7 @@ $querry_count = mysqli_query($Sychro, $sql_count);
 
 
     
-       <!-- <?php foreach($Searches as $Searche) { ?>
-            <tr class="col"> 
-            <td scope="row"><?php echo "special"; ?></td>
-            <td><?php echo $Searche['name']; ?></td>
-            <td><?php echo $Searche['matricule']; ?></td>
-            <td><?php echo $Searche['email']; ?></td>
-            <td><?php echo $Searche['program']; ?></td>
-            <td><button class = "btn btn-danger" id="<?php echo $Searche['id']; ?>" name = "delete"> Delete </button></td>
-            <td><button id="Edit">Edit</button></td>  
-            </tr>
-
-        <?php  }  ?>  -->
-
+      
       
     
 
@@ -239,24 +212,8 @@ $querry_count = mysqli_query($Sychro, $sql_count);
     <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
   </ul> 
 
-  <!-- .............Cards............  -->
-  <!-- <div class="card text-left">
-    <img class="card-img-top" src="holder.js/100px180/" alt="">
-    <div class="card-body">
-      <h4 class="card-title">Title</h4>
-      <p class="card-text">Body</p>
-    </div>
-  </div> -->
-   <!-- .............Cards............  -->
-
 
   <script src="index.js"></script>
 
 </body>
 </html>
-
-
-<!-- <form action="Index.php" method="post">
-                 <input type="hidden" name = "hidden_btn_delete" value="<?php echo $print['id']; ?>">
-                 <input type="submit" name = "delete" value="delete" class ="btn btn-danger">
-                </form> -->

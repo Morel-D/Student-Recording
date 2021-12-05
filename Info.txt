@@ -17,5 +17,5 @@ Objectif and Tasks :
 Some Problem Encountered 
 
 - Deletion opertaion not complete 
-- Search bar Operation not complete
-- Colum Counting Not complete
+- Auto numeration on the browser
+- Pop-Up Image
