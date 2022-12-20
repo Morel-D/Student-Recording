@@ -57,6 +57,20 @@
     /* font-size: 10px; */
 }
 
+
+
+#notif {
+    width: 200px;
+    height: 30px;
+    border-style: none;
+    background-color: rgb(253, 107, 107);
+}
+
+#notif b {
+    color: rgb(255, 37, 37);
+}
+
+
 /* table tbody tr td button {
     color: white;
     background-color: rgb(219, 6, 6);

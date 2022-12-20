@@ -1,6 +1,10 @@
 <?php
 require_once("Connection.php");
-    
+
+$sqls = "select * from student2 where id = $Name";
+$querry = mysqli_query($Sychro, $sqls);
+$view = mysqli_fetch_all($querry, MYSQLI_ASSOC)
+
 
 ?>
 
@@ -30,20 +34,38 @@ require_once("Connection.php");
 
 
     
-<div class="flex-cont">
-    <div class="empty"></div>
 
-<form action="Index.php" method="post">
     
+        
+      <!-- <div class="flex-cont">
+    <div class="empty"></div>
+     -->      
+      
+ <div class="container-fluid">
+     
+ 
+     
+<form action="Index.php" method="post">
+
+
+
+    <div class="row">
+
+  <div class = "col"></div>  
+
+ <div class= "col"> 
     <div class="form-group"> 
         <br>
       <label for="">Enter your Names</label>
       <input type="text" name="name" id="Fname" class="form-control" placeholder="Full Names" aria-describedby="helpId" ><br>
+      
    
         <label for="">Enter your Matricule</label>
         <input type="text" name="matricule" id="Mart" class="form-control" placeholder="ICTU...." aria-describedby="helpId"><br>   
       </div>
-      
+</div>      
+   
+<div class= "col"> 
       <div class="form-group">
           <br>
         <label for="">Enter your Email</label>
@@ -53,16 +75,27 @@ require_once("Connection.php");
         <input type="text" name="program" id="Prog" class="form-control" placeholder="SE" aria-describedby="helpId"><br><br>
         
       </div>
-<button type="submit" name = "save" id="save" value = "sumbit">Save</button>
+   
 
+<button type="submit" name = "save" id="save" value = "sumbit" onclick = "Empty_field()">Save</button>
+  </div>
 
+  <div class = "col"></div> 
+</div>   
 
 </form>
+<!-- </div> -->
+
+</div>
+
+<br><br>
 
 
- </div>    
 
-
+<div id= "notif">
+    
+<center> <label><b><?php echo $fill_error; ?></b></label>  </center>
+</div>
 
 
  <hr style="width: 1089px;">
@@ -70,7 +103,8 @@ require_once("Connection.php");
 <form action="Index.php" method="post">
 <div class="" style="margin-left: 100px;">
     <input type="text" name = "search" placeholder="Search">
-    <button type="submit" name ="Go" value = "<?php echo $Search?>" id="search">Search</button>
+    <!-- <button type="submit" name ="Go" value = "" id="search">Search</button> -->
+    <!-- <?php echo $Search?>  inside the btn 'value'-->
     <!-- <button type="submit" id="clear">Clear All</button> -->
 </form>    
 </div>
@@ -116,7 +150,7 @@ require_once("Connection.php");
 
       <?php foreach($prints as $print) {  ?>
        <tr class="col_table">
-            <td scope="row"><?php echo$print['id']; ?></td>
+            <td scope="row"><?php echo $print['id']; ?></td>
             <td><?php echo $print['name']; ?></td>
             <td><?php echo $print['matricule']; ?></td>
             <td><?php echo $print['email']; ?></td>
@@ -170,12 +204,17 @@ require_once("Connection.php");
                                      </button>
                              </div>
                              <div class="modal-body">
+                                 <?php while ($view){  ?>
                                  <ul>
-                                 <li><?php echo "<b>Name : </b>".$print['name']; ?></li>
-                                 <li><?php echo "<b>Student Matricule : </b>".$print['matricule']; ?></li>
-                                 <li><?php echo "<b>Student School Email : </b>".$print['email']; ?></li>
-                                 <li><?php echo "<b>Student Program : </b>".$print['program']; ?></li>
+                                 <li><?php echo "<b>Name : </b>".$view['name']; ?></li>
+                                 <li><?php echo "<b>Student Matricule : </b>".$view['matricule']; ?></li>
+                                 <li><?php echo "<b>Student School Email : </b>".$view['email']; ?></li>
+                                 <li><?php echo "<b>Student Program : </b>".$view['program']; ?></li>
                                  </ul>
+                                 <?php } ?>
+
+
+
                              </div>
                              <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -211,9 +250,6 @@ require_once("Connection.php");
     <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
     <li class="page-item"><a class="page-link text-dark" href="#">Next</a></li>
   </ul> 
-
-
-  <script src="index.js"></script>
 
 </body>
 </html>
